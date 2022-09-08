@@ -30,7 +30,8 @@ async function checkRumbleGame(client, message) {
             "prevPityInfo": [],
             "pityInfo": [],
             "killedUsers": [],
-            "revivedUsers": []
+            "revivedUsers": [],
+            "someoneDied": false
         }
     }
 
@@ -112,6 +113,7 @@ async function checkRumbleGame(client, message) {
 
                 channelStatus.prevPityInfo = channelStatus.pityInfo
                 channelStatus.pityInfo = []
+                channelStatus.someoneDied = false
 
                 channelStatus.lastWinner = member.id
             }
@@ -140,9 +142,9 @@ async function checkRumbleGame(client, message) {
 
                             if (debug && !!killer) console.log(`Killed by ${killer.displayName}`)
 
-                            if (round === '1') {
-                                if (channelStatus.pityInfo.length === 0)
-                                    channelStatus.pityInfo.push(killedUser.id)
+                            if (!channelStatus.someoneDied) {
+                                channelStatus.pityInfo.push(killedUser.id)
+                                channelStatus.someoneDied = true
                             }
 
                             if (killer) {
