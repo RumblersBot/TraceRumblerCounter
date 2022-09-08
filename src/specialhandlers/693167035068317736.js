@@ -97,7 +97,7 @@ async function checkRumbleGame(client, message) {
                 channelStatus.killedUsers = []
 
                 if (checkChannels.includes(message.channel.id)) {
-                    if (channelStatus.lastWinner === member.id) {
+                    if (channelStatus.lastWinner === member.id && channelStatus.ptsModifier === 1) {
                         // RULE: DOUBLE WIN
                         msg += `**\`DOUBLE WIN:\`** <@${member.id}>: ${1 * channelStatus.ptsModifier} pts - _Win 2 games in the same channel in a row_\n`
                     }
@@ -106,7 +106,7 @@ async function checkRumbleGame(client, message) {
                     for (let index = 0; index < pityWinner.length; index++) {
                         const win = pityWinner[index];
                         // RULE: PITY
-                        msg += `**\`PITY:\`** <@${win}>: ${2 * channelStatus.ptsModifier} pts - _Die 2 games in a row in round 1_\n`
+                        msg += `**\`PITY:\`** <@${win}>: ${2 * channelStatus.ptsModifier} pts - _Die first 2 games in a row (without reviving)_\n`
                     }
                 }
 
@@ -140,7 +140,10 @@ async function checkRumbleGame(client, message) {
 
                             if (debug && !!killer) console.log(`Killed by ${killer.displayName}`)
 
-                            if (round === '1') channelStatus.pityInfo.push(killedUser.id)
+                            if (round === '1') {
+                                if (channelStatus.pityInfo.length === 0)
+                                    channelStatus.pityInfo.push(killedUser.id)
+                            }
 
                             if (killer) {
                                 let killedBefore = channelStatus.killedUsers.filter(e => e.killedUser === killedUser.id && e.killer === killer.id)
@@ -152,7 +155,7 @@ async function checkRumbleGame(client, message) {
                                 let killKiller = channelStatus.killedUsers.filter(e => e.killedUser === killer.id && e.killer === killedUser.id)
                                 if (killKiller.length !== 0) {
                                     // RULE: REVENGE
-                                    msg += `**\`REVENGE:\`** <@${user1.id}>: ${3 * channelStatus.ptsModifier} pts - _Revive and kill your killer_\n`
+                                    msg += `**\`REVENGE:\`** <@${user1.id}>: ${Math.floor(3 * channelStatus.ptsModifier)} pts - _Revive and kill your killer_\n`
                                 }
                                 channelStatus.killedUsers.push({
                                     "killedUser": killedUser.id,
