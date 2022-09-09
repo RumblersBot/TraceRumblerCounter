@@ -234,7 +234,8 @@ function stripRumbleTitle(data) {
         " the Rumbler",
         " the Slasher",
         " the Alien",
-        " the God"
+        " the God",
+        " the Devil"
     ]
 
     for (let index = 0; index < knownTitles.length; index++) {
