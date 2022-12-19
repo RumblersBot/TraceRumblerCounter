@@ -6,7 +6,11 @@ module.exports = {
     category: "hidden",
     cmdpermissions: 0,
     description: "reloads the bot",
+    usage: "[force]",
     run: async (bot) => {
+
+        const {args} = bot
+        const force = args.join(" ") === "1"
 
         //Object.keys(require.cache).forEach(function(key) { delete require.cache[key] })
 
@@ -19,11 +23,11 @@ module.exports = {
         client.categories = fs.readdirSync("./src/commands/");
         client.slashcategories = fs.readdirSync("./src/slashcommands/");
 
-        await client.announceSlashCommands(bot)
+        await client.announceSlashCommands(bot, null, force)
 
         const os = require("os")
 
-        let embed = new Discord.MessageEmbed()
+        let embed = new Discord.EmbedBuilder()
             .setColor("#8DC685")
             .setTitle(`Bot Reload Complete on \`${os.hostname()}\``)
             .setDescription(client.functions.get("functions").autoAlign([
@@ -33,6 +37,7 @@ module.exports = {
                 [`\`${client.buttons.size}\``, `Buttons`],
                 [`\`${client.slashcommands.size}\``, `SlashCommands`],
                 [`\`${client.functions.size}\``, `Functions`],
+                [`\`${force}\``, `Forced`],
             ]))
 
         embed = client.functions.get("functions").setEmbedFooter(embed, client)

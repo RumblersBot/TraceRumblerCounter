@@ -185,7 +185,7 @@ async function checkRumbleGame(client, message) {
     client.channelData.set(message.channel.id, channelStatus)
 
     if (!!msg) {
-        let parsedEmbed = new Discord.MessageEmbed().setTitle("Parsed Battle: " + title).setDescription(msg).setColor("RED").setURL(message.url).setFooter({ text: `Points modifier: ${channelStatus.ptsModifier}` }).setTimestamp()
+        let parsedEmbed = new Discord.EmbedBuilder().setTitle("Parsed Battle: " + title).setDescription(msg).setColor(Discord.Colors.Red).setURL(message.url).setFooter({ text: `Points modifier: ${channelStatus.ptsModifier}` }).setTimestamp()
         return await message.guild.channels.cache.get("1016635880364060733").send({ embeds: [parsedEmbed] })
     }
 }
@@ -234,7 +234,19 @@ function stripRumbleTitle(data) {
         " the Rumbler",
         " the Slasher",
         " the Alien",
-        " the God"
+        " the God",
+        " the Disciplined",
+        " the Sword Master",
+        " the Pirate",
+        " the Sea Monster",
+        " the Devil",
+        " the Space Ranger",
+        " the Bloodthirsty",
+        " the Haunted",
+        " the Serial Killer",
+        " the Vampire",
+        " the Elf",
+        " the Snowman"
     ]
 
     for (let index = 0; index < knownTitles.length; index++) {
