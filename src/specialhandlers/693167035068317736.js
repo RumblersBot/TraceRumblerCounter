@@ -107,7 +107,7 @@ async function checkRumbleGame(client, message) {
                     for (let index = 0; index < pityWinner.length; index++) {
                         const win = pityWinner[index];
                         // RULE: PITY
-                        msg += `**\`PITY:\`** <@${win}>: ${2 * channelStatus.ptsModifier} pts - _Die first 2 games in the same channel in a row (without reviving)_\n`
+                        msg += `**\`PITY:\`** <@${win}>: ${2 * channelStatus.ptsModifier} pts - _Die as the first person, 2 games in the same channel in a row (without reviving)_\n`
                     }
                 }
 
